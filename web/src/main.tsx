@@ -244,7 +244,7 @@ function App() {
   const [account, setAccount] = useState<Address | null>(null);
   const [chainId, setChainId] = useState<number | null>(null);
   const [tokenKey, setTokenKey] = useState<TokenKey>('USDC');
-  const [activeTab, setActiveTab] = useState<'vaults' | 'portfolio'>('vaults');
+  const [activeTab, setActiveTab] = useState<'vaults' | 'portfolio' | 'tvl'>('vaults');
   const [amount, setAmount] = useState('');
   const [addTvlAmount, setAddTvlAmount] = useState('');
   const [lockDays, setLockDays] = useState('30');
@@ -581,6 +581,12 @@ function App() {
           >
             Portfolio
           </button>
+          <button
+            className={activeTab === 'tvl' ? 'active' : ''}
+            onClick={() => setActiveTab('tvl')}
+          >
+            Add TVL
+          </button>
         </div>
 
         {activeTab === 'vaults' ? (
@@ -704,7 +710,7 @@ function App() {
               </aside>
             </div>
           </>
-        ) : (
+        ) : activeTab === 'portfolio' ? (
           <section className="portfolio-panel">
             <div className="section-title">
               <div>
@@ -776,6 +782,74 @@ function App() {
                 })}
               </div>
             )}
+          </section>
+        ) : (
+          <section className="portfolio-panel">
+            <div className="section-title">
+              <div>
+                <div className="section-label">Reward Pool</div>
+                <h2>Add TVL to Reward Pool</h2>
+              </div>
+            </div>
+
+            <p style={{color: '#8f95a6', marginBottom: '24px', lineHeight: 1.6}}>
+              Transfer USDC or EURC directly to the vault contract as reward pool funding. This TVL is used to pay stakers their APR rewards when they withdraw.
+            </p>
+
+            <div className="reward-pool-box">
+              <span>Current reward pool</span>
+              <strong>{formatToken(rewardPool)} {token.symbol}</strong>
+            </div>
+
+            <div className="token-tabs" role="tablist" style={{marginBottom: '20px'}}>
+              {(['USDC', 'EURC'] as TokenKey[]).map((key) => (
+                <button
+                  key={key}
+                  className={key === tokenKey ? 'active' : ''}
+                  onClick={() => setTokenKey(key)}
+                >
+                  ⊙ {key}
+                </button>
+              ))}
+            </div>
+
+            <label>Amount to add</label>
+            <div className="input-row">
+              <input
+                value={addTvlAmount}
+                onChange={(event) => setAddTvlAmount(event.target.value)}
+                placeholder="0.00"
+                inputMode="decimal"
+              />
+              <button className="max-button" onClick={() => setAddTvlAmount(formatUnits(balance, token.decimals))}>MAX</button>
+              <span>{token.symbol}</span>
+            </div>
+
+            <div className="balance-line">
+              <span>Wallet balance</span>
+              <strong>{formatToken(balance)} {token.symbol}</strong>
+            </div>
+
+            {!account ? (
+              <button className="primary-action" onClick={connectWallet}>Connect wallet</button>
+            ) : (
+              <button className="primary-action" disabled={loading || parsedAddTvlAmount <= 0n} onClick={addTvl}>Add {token.symbol} to Reward Pool</button>
+            )}
+
+            <div className="mini-metrics" style={{marginTop: '28px'}}>
+              <div>
+                <span>Locked TVL (stakers)</span>
+                <strong>{formatToken(tvl)} {token.symbol}</strong>
+              </div>
+              <div>
+                <span>Reward TVL (pool)</span>
+                <strong>{formatToken(rewardPool)} {token.symbol}</strong>
+              </div>
+              <div>
+                <span>Total contract TVL</span>
+                <strong>{formatToken(totalDisplayedTvl)} {token.symbol}</strong>
+              </div>
+            </div>
           </section>
         )}
       </section>
