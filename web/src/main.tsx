@@ -525,9 +525,7 @@ function App() {
       </nav>
 
       <section className="hero">
-        <div className="live-pill"><span /> Live on Arc Testnet</div>
-        <h1>Lock savings.<br /><strong>Build discipline.</strong></h1>
-        <p>ArcStake is a non-custodial savings vault on Arc Testnet. Lock USDC or EURC, track your days, and see estimated rewards.</p>
+        <h1><strong>Stake on Arc</strong></h1>
       </section>
 
       {!vaultReady && (
