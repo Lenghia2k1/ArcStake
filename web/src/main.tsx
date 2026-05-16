@@ -618,8 +618,7 @@ function App() {
               <span>{activeCount.toString()} / {maxVaults.toString()} vaults used</span>
             </div>
 
-            <div className="cards-grid">
-              <section className="main-card">
+            <section className="main-card" style={{maxWidth: '560px', margin: '0 auto'}}>
                 <div className="section-label">Vaults</div>
                 <h2>{token.label}</h2>
 
@@ -676,25 +675,12 @@ function App() {
                 )}
               </section>
 
-              <aside className="info-card">
-                <div className="section-label">APR Tiers</div>
-                <h3>Earn more by staking longer</h3>
-                <p>The longer you lock your tokens, the higher APR you receive. Choose a lock period that suits your strategy.</p>
+            </div>
 
-                <div className="mini-metrics" style={{marginTop: '18px'}}>
-                  <div><span>7 days</span><strong>10% APR</strong></div>
-                  <div><span>30 days</span><strong>20% APR</strong></div>
-                  <div><span>90 days</span><strong>35% APR</strong></div>
-                  <div><span>180 days</span><strong>40% APR</strong></div>
-                  <div><span>365 days</span><strong>50% APR</strong></div>
-                </div>
-
-                <div className="faucet-card">
-                  <span>Need testnet tokens?</span>
-                  <p>Get Arc Testnet USDC or EURC from the Circle Faucet, then come back and refresh your balance.</p>
-                  <a href={ARC_FAUCET} target="_blank" rel="noreferrer">Open Faucet ↗</a>
-                </div>
-              </aside>
+            <div className="faucet-card" style={{maxWidth: '560px', margin: '24px auto 0'}}>
+              <span>Need testnet tokens?</span>
+              <p>Get Arc Testnet USDC or EURC from the Circle Faucet, then come back and refresh your balance.</p>
+              <a href={ARC_FAUCET} target="_blank" rel="noreferrer">Open Faucet ↗</a>
             </div>
           </>
         ) : activeTab === 'portfolio' ? (
