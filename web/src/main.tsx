@@ -390,7 +390,32 @@ function App() {
 
       setAccount(addr);
       const chainHex = await provider.request({ method: 'eth_chainId' });
-      setChainId(Number(chainHex));
+      const currentChain = Number(chainHex);
+      setChainId(currentChain);
+
+      // Auto switch to Arc Testnet if on wrong chain
+      if (currentChain !== ARC_CHAIN_ID) {
+        try {
+          await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: ARC_CHAIN_ID_HEX }] });
+          setChainId(ARC_CHAIN_ID);
+        } catch (switchErr: any) {
+          if (switchErr.code === 4902 || switchErr.code === -32603) {
+            try {
+              await provider.request({
+                method: 'wallet_addEthereumChain',
+                params: [{
+                  chainId: ARC_CHAIN_ID_HEX,
+                  chainName: 'Arc Testnet',
+                  nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 18 },
+                  rpcUrls: [ARC_RPC],
+                  blockExplorerUrls: [ARC_EXPLORER],
+                }],
+              });
+              setChainId(ARC_CHAIN_ID);
+            } catch {}
+          }
+        }
+      }
       setMessage('Wallet connected & verified!');
     } catch (error: any) {
       setMessage(error.message || 'Failed to connect wallet.');
