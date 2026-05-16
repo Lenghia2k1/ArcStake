@@ -245,6 +245,7 @@ function App() {
   const [chainId, setChainId] = useState<number | null>(null);
   const [tokenKey, setTokenKey] = useState<TokenKey>('USDC');
   const [activeTab, setActiveTab] = useState<'vaults' | 'portfolio' | 'tvl'>('vaults');
+  const [showWalletModal, setShowWalletModal] = useState(false);
   const [amount, setAmount] = useState('');
   const [addTvlAmount, setAddTvlAmount] = useState('');
   const [lockDays, setLockDays] = useState('30');
@@ -365,25 +366,30 @@ function App() {
   }, []);
 
   async function connectWallet() {
-    if (!window.ethereum) {
-      setMessage('Please install MetaMask, Rabby, or another EVM wallet.');
+    setShowWalletModal(true);
+  }
+
+  async function connectWithProvider(provider: any) {
+    setShowWalletModal(false);
+    if (!provider) {
+      setMessage('Wallet not found. Please install the selected wallet extension.');
       return;
     }
 
     try {
-      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const accounts = await provider.request({ method: 'eth_requestAccounts' });
       const addr = accounts[0] as Address;
 
       // Sign message to verify wallet ownership
       const timestamp = Math.floor(Date.now() / 1000);
-      const msg = `Welcome to ArcStake!\n\nSign this message to verify your wallet ownership.\n\nWallet: ${addr}\nTimestamp: ${timestamp}`;
-      await window.ethereum.request({
+      const msg = `Welcome to ArcVault!\n\nSign this message to verify your wallet ownership.\n\nWallet: ${addr}\nTimestamp: ${timestamp}`;
+      await provider.request({
         method: 'personal_sign',
         params: [msg, addr],
       });
 
       setAccount(addr);
-      const chainHex = await window.ethereum.request({ method: 'eth_chainId' });
+      const chainHex = await provider.request({ method: 'eth_chainId' });
       setChainId(Number(chainHex));
       setMessage('Wallet connected & verified!');
     } catch (error: any) {
@@ -827,6 +833,33 @@ function App() {
           </section>
         )}
       </section>
+
+      {showWalletModal && (
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,.5)',zIndex:100,display:'grid',placeItems:'center'}} onClick={() => setShowWalletModal(false)}>
+          <div style={{background:'#fff',borderRadius:'24px',padding:'32px',maxWidth:'380px',width:'90%',boxShadow:'0 30px 80px rgba(0,0,0,.2)'}} onClick={(e) => e.stopPropagation()}>
+            <h3 style={{margin:'0 0 8px',fontSize:'22px',letterSpacing:'-.03em',color:'#1d2031'}}>Connect Wallet</h3>
+            <p style={{margin:'0 0 22px',color:'#8f95a6',fontSize:'14px'}}>Select a wallet to connect to ArcVault</p>
+            <div style={{display:'grid',gap:'10px'}}>
+              {window.ethereum?.isMetaMask && (
+                <button className="primary-action" style={{minHeight:'50px',fontSize:'15px'}} onClick={() => connectWithProvider(window.ethereum)}>MetaMask</button>
+              )}
+              {(window as any).okxwallet && (
+                <button className="primary-action" style={{minHeight:'50px',fontSize:'15px'}} onClick={() => connectWithProvider((window as any).okxwallet)}>OKX Wallet</button>
+              )}
+              {window.ethereum && !window.ethereum?.isMetaMask && !(window as any).okxwallet && (
+                <button className="primary-action" style={{minHeight:'50px',fontSize:'15px'}} onClick={() => connectWithProvider(window.ethereum)}>Browser Wallet</button>
+              )}
+              {window.ethereum && (
+                <button className="primary-action" style={{minHeight:'50px',fontSize:'15px',background:'linear-gradient(135deg, #2b2364, #8a38f5)'}} onClick={() => connectWithProvider(window.ethereum)}>Default Wallet</button>
+              )}
+              {!window.ethereum && (
+                <p style={{color:'#e74c3c',textAlign:'center',fontWeight:700}}>No wallet detected. Please install MetaMask or OKX Wallet.</p>
+              )}
+            </div>
+            <button style={{marginTop:'16px',width:'100%',padding:'12px',background:'transparent',color:'#9aa1b2',fontWeight:800,borderRadius:'12px',border:'1px solid #eee'}} onClick={() => setShowWalletModal(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
 
       {message && <div className="toast">{message}</div>}
     </main>
