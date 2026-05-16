@@ -505,8 +505,12 @@ function App() {
     <main className="app-shell">
       <nav className="top-nav">
         <div className="brand">
-          <div className="logo">A</div>
-          <span>ArcStash</span>
+          <div className="logo">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2L3 20h4l1.5-3h7l1.5 3h4L12 2zm0 6l2.5 6h-5L12 8z" fill="white"/>
+            </svg>
+          </div>
+          <span>ArcStake</span>
         </div>
         <div className="nav-actions">
           <a href={ARC_FAUCET} target="_blank" rel="noreferrer" className="faucet-link">
@@ -523,7 +527,7 @@ function App() {
       <section className="hero">
         <div className="live-pill"><span /> Live on Arc Testnet</div>
         <h1>Lock savings.<br /><strong>Build discipline.</strong></h1>
-        <p>ArcStash is a non-custodial savings vault on Arc Testnet. Lock USDC or EURC, track your days, and see estimated rewards.</p>
+        <p>ArcStake is a non-custodial savings vault on Arc Testnet. Lock USDC or EURC, track your days, and see estimated rewards.</p>
       </section>
 
       {!vaultReady && (
@@ -533,7 +537,7 @@ function App() {
       )}
 
       <section className="vault-layout">
-        <div className="app-tabs" role="tablist" aria-label="ArcStash main sections">
+        <div className="app-tabs" role="tablist" aria-label="ArcStake main sections">
           <button
             className={activeTab === 'vaults' ? 'active' : ''}
             onClick={() => setActiveTab('vaults')}

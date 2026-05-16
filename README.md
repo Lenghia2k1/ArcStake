@@ -1,6 +1,6 @@
-# ArcStash Vault Dapp
+# ArcStake Vault Dapp
 
-A clean ArcStash-style dapp for Arc Testnet. Users connect an EVM wallet, choose USDC or EURC, lock tokens for a period, and see remaining days plus estimated profit.
+A clean ArcStake-style dapp for Arc Testnet. Users connect an EVM wallet, choose USDC or EURC, lock tokens for a period, and see remaining days plus estimated profit.
 
 ## What this app does
 

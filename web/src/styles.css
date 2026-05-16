@@ -31,11 +31,11 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .brand span { color: #202033; }
 .brand span::first-letter { color: #7d38f4; }
 .logo {
-  width: 38px; height: 38px; border-radius: 11px;
+  width: 38px; height: 38px; border-radius: 10px;
   display: grid; place-items: center;
   color: white; font-weight: 900;
-  background: linear-gradient(135deg, #2421c7, #8e39ff);
-  box-shadow: 0 10px 24px rgba(126, 56, 244, .22);
+  background: #4b2daf;
+  box-shadow: 0 10px 24px rgba(75, 45, 175, .25);
 }
 .nav-actions { display: flex; align-items: center; gap: 22px; }
 .faucet-link { color: #9aa1b3; text-decoration: none; font-size: 14px; font-weight: 700; }
