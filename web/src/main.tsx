@@ -12,8 +12,8 @@ import {
 } from 'viem';
 import './styles.css';
 
-const ARC_CHAIN_ID = 5042002;
-const ARC_CHAIN_ID_HEX = '0x4CEDFA';
+const ARC_CHAIN_ID = 5041658;
+const ARC_CHAIN_ID_HEX = '0x4CEB7A';
 const ARC_RPC = 'https://rpc.testnet.arc.network';
 const ARC_EXPLORER = 'https://testnet.arcscan.app';
 const ARC_FAUCET = 'https://faucet.circle.com/';
