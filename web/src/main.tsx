@@ -600,13 +600,7 @@ function App() {
 
         {activeTab === 'vaults' ? (
           <>
-            <div className="tab-heading">
-              <div>
-                <span>Create vault</span>
-                <h2>Add a new lock position</h2>
-              </div>
-              <p>Choose USDC or EURC, enter an amount, select a lock period, then create a vault on Arc Testnet.</p>
-            </div>
+
 
             <div className="token-tabs" role="tablist">
               {(['USDC', 'EURC'] as TokenKey[]).map((key) => (
