@@ -653,9 +653,9 @@ function App() {
                 {!account ? (
                   <button className="primary-action" onClick={connectWallet}>Connect wallet to deposit</button>
                 ) : needsApprove ? (
-                  <button className="primary-action" disabled={loading || !vaultReady} onClick={approve}>Approve {token.symbol}</button>
+                  <button className="primary-action" disabled={loading} onClick={approve}>Approve {token.symbol}</button>
                 ) : (
-                  <button className="primary-action" disabled={loading || !vaultReady || parsedAmount <= 0n} onClick={createVault}>Add vault</button>
+                  <button className="primary-action" disabled={loading || parsedAmount <= 0n} onClick={createVault}>Add vault</button>
                 )}
               </section>
 
