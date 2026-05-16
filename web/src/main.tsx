@@ -47,7 +47,7 @@ type VaultView = {
   estimatedReward: bigint;
 };
 
-const VAULT_ADDRESS = (import.meta.env.VITE_VAULT_ADDRESS || '') as Address;
+const VAULT_ADDRESS = (import.meta.env.VITE_VAULT_ADDRESS || '0x19571Ff0E2982A232DdAFA6c57f3762AE3532C7A') as Address;
 
 const publicClient = createPublicClient({
   chain: {
