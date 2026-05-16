@@ -12,9 +12,8 @@ A clean ArcStake-style dapp for Arc Testnet. Users connect an EVM wallet, choose
 - Create lock vault
 - Show active vaults with days left, unlock date, current profit, and profit at unlock
 - Add TVL / reward pool from the UI
-- Show TVL đã add separately from locked TVL
+- Show TVL added separately from locked TVL
 - Withdraw after unlock
-
 
 ## Add TVL / TVL đã add
 
@@ -59,49 +58,6 @@ Use Remix for the fastest path.
 usdc = 0x3600000000000000000000000000000000000000
 eurc = 0x89B50855Aa3bE2F677cD6303Cec089B5F319D72a
 ```
-
-7. Copy the deployed contract address.
-
-## 2. Configure frontend
-
-Create `web/.env`:
-
-```env
-VITE_VAULT_ADDRESS=0xYourDeployedVaultContract
-```
-
-## 3. Run locally
-
-```bash
-npm run install:web
-npm run dev
-```
-
-Open the URL shown by Vite.
-
-## 4. Deploy on Render
-
-This repo includes a `Dockerfile` and `render.yaml`.
-
-1. Push the repo to GitHub.
-2. Create a Render Web Service.
-3. Select Docker runtime.
-4. Add environment variable:
-
-```env
-VITE_VAULT_ADDRESS=0xYourDeployedVaultContract
-```
-
-5. Deploy.
-
-## 5. Fund reward pool
-
-After deployment, send testnet USDC/EURC directly to the deployed vault contract address if you want the app to pay profit on withdrawal.
-
-## Safety
-
-This is a testnet demo contract. Review and audit before using with real funds or mainnet assets.
-
 ## Testnet tokens faucet
 
 The UI includes a **Faucet Testnet Tokens** link in the top navigation and an **Open Faucet** card in the rewards panel. Both open:
@@ -109,7 +65,6 @@ The UI includes a **Faucet Testnet Tokens** link in the top navigation and an **
 ```txt
 https://faucet.circle.com/
 ```
-
 Use the faucet to request Arc Testnet USDC or EURC, then return to the app and refresh the wallet balance.
 
 ## UI tabs
