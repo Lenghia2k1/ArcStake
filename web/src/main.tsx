@@ -372,9 +372,20 @@ function App() {
 
     try {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-      setAccount(accounts[0]);
+      const addr = accounts[0] as Address;
+
+      // Sign message to verify wallet ownership
+      const timestamp = Math.floor(Date.now() / 1000);
+      const msg = `Welcome to ArcStake!\n\nSign this message to verify your wallet ownership.\n\nWallet: ${addr}\nTimestamp: ${timestamp}`;
+      await window.ethereum.request({
+        method: 'personal_sign',
+        params: [msg, addr],
+      });
+
+      setAccount(addr);
       const chainHex = await window.ethereum.request({ method: 'eth_chainId' });
       setChainId(Number(chainHex));
+      setMessage('Wallet connected & verified!');
     } catch (error: any) {
       setMessage(error.message || 'Failed to connect wallet.');
     }
