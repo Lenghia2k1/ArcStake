@@ -677,29 +677,16 @@ function App() {
               </section>
 
               <aside className="info-card">
-                <div className="section-label">Vault health</div>
-                <h3>Reward pool</h3>
-                <p>Vaults are non-custodial lock positions. Reward TVL is surplus token inside the contract and is used to pay profit when users withdraw after unlock.</p>
+                <div className="section-label">APR Tiers</div>
+                <h3>Earn more by staking longer</h3>
+                <p>The longer you lock your tokens, the higher APR you receive. Choose a lock period that suits your strategy.</p>
 
-                <div className="reward-pool-box">
-                  <span>TVL added to rewards</span>
-                  <strong>{formatToken(rewardPool)} {token.symbol}</strong>
-                </div>
-
-                <label>Add reward TVL</label>
-                <div className="add-tvl-row compact">
-                  <input
-                    value={addTvlAmount}
-                    onChange={(event) => setAddTvlAmount(event.target.value)}
-                    placeholder="0.00"
-                    inputMode="decimal"
-                  />
-                  <span>{token.symbol}</span>
-                  {!account ? (
-                    <button onClick={connectWallet}>Connect</button>
-                  ) : (
-                    <button disabled={loading || !vaultReady || parsedAddTvlAmount <= 0n} onClick={addTvl}>Add TVL</button>
-                  )}
+                <div className="mini-metrics" style={{marginTop: '18px'}}>
+                  <div><span>7 days</span><strong>10% APR</strong></div>
+                  <div><span>30 days</span><strong>20% APR</strong></div>
+                  <div><span>90 days</span><strong>35% APR</strong></div>
+                  <div><span>180 days</span><strong>40% APR</strong></div>
+                  <div><span>365 days</span><strong>50% APR</strong></div>
                 </div>
 
                 <div className="faucet-card">
