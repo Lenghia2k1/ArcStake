@@ -652,8 +652,6 @@ function App() {
 
                 {!account ? (
                   <button className="primary-action" onClick={connectWallet}>Connect wallet to deposit</button>
-                ) : chainId !== ARC_CHAIN_ID ? (
-                  <button className="primary-action" onClick={switchToArc}>Switch to Arc Testnet</button>
                 ) : needsApprove ? (
                   <button className="primary-action" disabled={loading || !vaultReady} onClick={approve}>Approve {token.symbol}</button>
                 ) : (
@@ -682,8 +680,6 @@ function App() {
                   <span>{token.symbol}</span>
                   {!account ? (
                     <button onClick={connectWallet}>Connect</button>
-                  ) : chainId !== ARC_CHAIN_ID ? (
-                    <button onClick={switchToArc}>Switch</button>
                   ) : (
                     <button disabled={loading || !vaultReady || parsedAddTvlAmount <= 0n} onClick={addTvl}>Add TVL</button>
                   )}
