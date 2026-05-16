@@ -517,12 +517,12 @@ function App() {
 
   // APR tiers: the longer you stake, the higher the APR
   const APR_TIERS = [
-    { minDays: 365, apr: 50 },
-    { minDays: 180, apr: 40 },
-    { minDays: 90, apr: 35 },
-    { minDays: 30, apr: 20 },
-    { minDays: 7, apr: 10 },
-    { minDays: 0, apr: 5 },
+    { minDays: 365, apr: 100 },
+    { minDays: 180, apr: 80 },
+    { minDays: 90, apr: 70 },
+    { minDays: 30, apr: 40 },
+    { minDays: 7, apr: 20 },
+    { minDays: 0, apr: 10 },
   ];
 
   const currentApr = useMemo(() => {
