@@ -675,8 +675,6 @@ function App() {
                 )}
               </section>
 
-            </div>
-
             <div className="faucet-card" style={{maxWidth: '560px', margin: '24px auto 0'}}>
               <span>Need testnet tokens?</span>
               <p>Get Arc Testnet USDC or EURC from the Circle Faucet, then come back and refresh your balance.</p>
