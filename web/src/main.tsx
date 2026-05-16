@@ -370,9 +370,14 @@ function App() {
       return;
     }
 
-    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-    setAccount(accounts[0]);
-    await switchToArc();
+    try {
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      setAccount(accounts[0]);
+      const chainHex = await window.ethereum.request({ method: 'eth_chainId' });
+      setChainId(Number(chainHex));
+    } catch (error: any) {
+      setMessage(error.message || 'Failed to connect wallet.');
+    }
   }
 
   async function switchToArc() {
@@ -380,21 +385,27 @@ function App() {
     try {
       await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: ARC_CHAIN_ID_HEX }] });
     } catch (error: any) {
-      if (error.code === 4902) {
-        await window.ethereum.request({
-          method: 'wallet_addEthereumChain',
-          params: [
-            {
-              chainId: ARC_CHAIN_ID_HEX,
-              chainName: 'Arc Testnet',
-              nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 18 },
-              rpcUrls: [ARC_RPC],
-              blockExplorerUrls: [ARC_EXPLORER],
-            },
-          ],
-        });
+      if (error.code === 4902 || error.code === -32603) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: ARC_CHAIN_ID_HEX,
+                chainName: 'Arc Testnet',
+                nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 18 },
+                rpcUrls: [ARC_RPC],
+                blockExplorerUrls: [ARC_EXPLORER],
+              },
+            ],
+          });
+        } catch (addError: any) {
+          setMessage('Please manually switch to Arc Testnet (Chain ID 5042002) in your wallet settings.');
+          return;
+        }
       } else {
-        throw error;
+        setMessage('Please manually switch to Arc Testnet (Chain ID 5042002) in your wallet settings.');
+        return;
       }
     }
     const chainHex = await window.ethereum.request({ method: 'eth_chainId' });
