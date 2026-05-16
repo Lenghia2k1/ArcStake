@@ -556,7 +556,10 @@ function App() {
             Faucet Testnet Tokens ↗
           </a>
           {account ? (
-            <button className="wallet-button" onClick={switchToArc}>{shortAddress(account)}</button>
+            <>
+              <button className="wallet-button" onClick={switchToArc}>{shortAddress(account)}</button>
+              <button className="ghost-button" onClick={() => { setAccount(null); setChainId(null); setBalance(0n); setVaults([]); setMessage('Wallet disconnected.'); }}>Logout</button>
+            </>
           ) : (
             <button className="wallet-button" onClick={connectWallet}>Connect Wallet</button>
           )}
