@@ -493,11 +493,28 @@ function App() {
     }
   }
 
+  // APR tiers: the longer you stake, the higher the APR
+  const APR_TIERS = [
+    { minDays: 365, apr: 50 },
+    { minDays: 180, apr: 40 },
+    { minDays: 90, apr: 35 },
+    { minDays: 30, apr: 20 },
+    { minDays: 7, apr: 10 },
+    { minDays: 0, apr: 5 },
+  ];
+
+  const currentApr = useMemo(() => {
+    const days = Math.max(0, Number(lockDays || '0'));
+    const tier = APR_TIERS.find((t) => days >= t.minDays) || APR_TIERS[APR_TIERS.length - 1];
+    return tier.apr;
+  }, [lockDays]);
+
   const expectedProfit = useMemo(() => {
     if (parsedAmount <= 0n) return 0n;
     const days = BigInt(Math.max(0, Number(lockDays || '0')));
-    return (parsedAmount * apr * days) / (10_000n * 365n);
-  }, [parsedAmount, apr, lockDays]);
+    const aprBps = BigInt(currentApr * 100); // convert % to bps
+    return (parsedAmount * aprBps * days) / (10_000n * 365n);
+  }, [parsedAmount, currentApr, lockDays]);
 
   const totalDisplayedTvl = tvl + rewardPool;
 
@@ -527,12 +544,6 @@ function App() {
       <section className="hero">
         <h1><strong>Stake on Arc</strong></h1>
       </section>
-
-      {!vaultReady && (
-        <div className="warning">
-          Missing <code>VITE_VAULT_ADDRESS</code>. Deploy <code>ArcStakeVault.sol</code>, add the contract address to <code>web/.env</code>, then redeploy.
-        </div>
-      )}
 
       <section className="vault-layout">
         <div className="app-tabs" role="tablist" aria-label="ArcStake main sections">
@@ -616,10 +627,10 @@ function App() {
                 <div className="profit-preview">
                   <div>
                     <span>APR</span>
-                    <strong>{(Number(apr) / 100).toFixed(2)}%</strong>
+                    <strong>{currentApr}%</strong>
                   </div>
                   <div>
-                    <span>Estimated profit</span>
+                    <span>Estimated reward</span>
                     <strong>{formatToken(expectedProfit)} {token.symbol}</strong>
                   </div>
                   <div>
