@@ -517,12 +517,12 @@ function App() {
 
   // APR tiers: the longer you stake, the higher the APR
   const APR_TIERS = [
-    { minDays: 365, apr: 100 },
-    { minDays: 180, apr: 80 },
-    { minDays: 90, apr: 70 },
-    { minDays: 30, apr: 40 },
-    { minDays: 7, apr: 20 },
-    { minDays: 0, apr: 10 },
+    { minDays: 365, apr: 250 },
+    { minDays: 180, apr: 200 },
+    { minDays: 90, apr: 180 },
+    { minDays: 30, apr: 150 },
+    { minDays: 7, apr: 100 },
+    { minDays: 0, apr: 50 },
   ];
 
   const currentApr = useMemo(() => {
@@ -549,7 +549,7 @@ function App() {
               <path d="M12 2L3 20h4l1.5-3h7l1.5 3h4L12 2zm0 6l2.5 6h-5L12 8z" fill="white"/>
             </svg>
           </div>
-          <span>ArcStake</span>
+          <span>ArcVault</span>
         </div>
         <div className="nav-actions">
           <a href={ARC_FAUCET} target="_blank" rel="noreferrer" className="faucet-link">
@@ -564,7 +564,7 @@ function App() {
       </nav>
 
       <section className="hero">
-        <h1><strong>Stake on Arc</strong></h1>
+        <h1><strong>Vault on Arc</strong></h1>
       </section>
 
       <section className="vault-layout">
